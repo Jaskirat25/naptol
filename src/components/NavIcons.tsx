@@ -40,12 +40,12 @@ function NavIcons() {
         className="cursor-pointer"
       />
      <div className="relative">
-  <div className="relative cursor-pointer" onClick={() => setCartOpen((prev) => !prev)}>
-    <Image src="/cart.png" alt="Cart" width={22} height={22} />
-    <div className="absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-white text-xs flex items-center justify-center rounded-full shadow-md">
-      3
+<div className="relative cursor-pointer" onClick={() => setCartOpen((prev) => !prev)}>
+    <Image src="/cart.png" alt="Cart" width={23} height={23}  />
+    <div className="absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-white text-xs flex items-center justify-center rounded-full shadow-md ">
+        3
     </div>
-  </div>
+</div>
 
   {isCartOpen && (
     <div className="absolute top-10 right-0 w-64 bg-white shadow-lg rounded-lg p-4 z-50">

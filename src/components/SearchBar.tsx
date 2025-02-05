@@ -14,10 +14,10 @@ export default function SearchBar() {
   };
   return (
     <form
-     onSubmit={handleSearch}
-     
-      className="flex items-center bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm w-full max-w-md"
-    >
+    onSubmit={handleSearch}
+    className="flex items-center bg-white border border-gray-300 rounded-full px-2 py-2 
+               shadow-md w-26  transition-all focus-within:border-blue-500"
+  >
       <svg
         className="w-5 h-5 text-gray-500"
         fill="none"

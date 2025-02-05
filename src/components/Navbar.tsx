@@ -6,32 +6,35 @@ import SearchBar from "./SearchBar";
 import NavIcons from "./NavIcons";
 function Navbar() {
   return (
-    <div className="h-20 px-4 md:px-8 lg:px-16  ">
-      {/* mobile */}
+    <div className="h-20 px-4 md:px-8 lg:px-64 border bg-white">
+      {/* Mobile */}
       <div className="flex justify-between items-center h-full md:hidden">
-        <Link href="/">
-          <div className="test-2xl tracking-wide">NAPTOL</div>
+        <Link href="/" className="flex items-center gap-2">
+          <Image src="/logo.png" alt="Logo" width={24} height={24} />
+          <div className="text-2xl font-semibold text-gray-900 tracking-wide ">NAPTOL</div>
         </Link>
         <Menu />
       </div>
-      {/* laptop */}
-      <div className="hidden md:flex h-full ml-10">
+
+      {/* Laptop */}
+      <div className="hidden md:flex flex-auto gap-12 items-center h-full">
         {/* Left */}
-        <div className=" flex items-center justify-between ">
-          <Link href="/" className="flex items-center ml-20 gap-2">
-            <Image src="/logo.png" alt="" width={24} height={24} />
-            <div className="test-4xl tracking-wide">NAPTOL</div>
+        <div className="w-2/3  flex items-center gap-10">
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Logo" width={26} height={26} />
+            <div className="text-3xl font-bold text-gray-900 tracking-wide">NAPTOL</div>
           </Link>
-            <div className="flex gap-3 ml-20">
-            <Link href="/">Home</Link>
-            <Link href="/">Home</Link>
-            <Link href="/">Home</Link>
-            <Link href="/">Home</Link>
-            <Link href="/">Home</Link>
-            </div>
+          <nav className="hidden lg:flex gap-5 text-gray-700 font-medium">
+            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <Link href="/" className="hover:text-blue-600">Shop</Link>
+            <Link href="/" className="hover:text-blue-600">Deal</Link>
+            <Link href="/" className="hover:text-blue-600">About</Link>
+            <Link href="/" className="hover:text-blue-600">Contact</Link>
+          </nav>
         </div>
-        {/* right */}
-        <div className="w-2/3 flex items-center gap-9  h-full ml-20 ">
+
+        {/* Right */}
+        <div className="flex items-center gap-4 w-full">
           <SearchBar />
           <NavIcons />
         </div>
@@ -39,5 +42,7 @@ function Navbar() {
     </div>
   );
 }
+
+
 
 export default Navbar;
