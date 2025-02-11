@@ -3,6 +3,9 @@ const nextConfig = {
     images:{
         remotePatterns:[{
             protocol:'https',
+            hostname:"static.wixstatic.com",
+        },{
+            protocol:'https',
             hostname:"images.pexels.com",
         }]
     }

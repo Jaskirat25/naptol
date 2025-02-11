@@ -1,37 +1,37 @@
-// "use client"
-// import { createClient, OAuthStrategy} from "@wix/sdk";
-// import { availabilityCalendar, services } from "@wix/bookings";
-// import { products, collections } from "@wix/stores";
-// import Cookies from "js-cookie";
-// import { useContext, ReactNode, createContext } from "react";
-// const refreshToken = JSON.parse(Cookies.get("refreshToken") || "{}");
-// const myWixClient = createClient({
-//   modules: {
-//     products,
-//     collections,
-//     //  currentCart,
-//   },
-//   auth: OAuthStrategy({
-//     clientId: process.env.NEXT_PUBLIC_OAUTH_SECRET_KEY!,
-//     tokens: {
-//       refreshToken,
-//       accessToken: {
-//         value: "",
-//         expiresAt: 0,
-//       },
-//     },
-//   }),
-// });
+"use server";
+import { OAuthStrategy, createClient } from "@wix/sdk";
+import { collections, products } from "@wix/stores";
+import { log } from "console";
+// import { orders } from "@wix/ecom";
+import { cookies } from "next/headers";
+// import { members } from '@wix/members';
 
-// export type wixClient = typeof myWixClient;
-// export const WixClient = createContext<wixClient>(myWixClient);
+export const wixClientServer = async () => {
+  let refreshToken;
 
-// export const WixClientContextProvider = ({
-//   children,
-// }: {
-//   children: ReactNode;
-// }) => {
-//   return (
-//     <WixClient.Provider value={myWixClient}>{children}</WixClient.Provider>
-//   );
-// };
+  try {
+    const cookieStore =  await cookies();
+    refreshToken = JSON.parse(cookieStore.get("refreshToken")?.value || "{}");
+
+} catch (e) {
+    console.log(e);
+  }
+
+  const wixClient = createClient({
+    modules: {
+      products,
+      collections,
+      //   orders,
+      //   members,
+    },
+    auth: OAuthStrategy({
+      clientId: process.env.NEXT_PUBLIC_OAUTH_SECRET_KEY!,
+      tokens: {
+        refreshToken,
+        accessToken: { value: "", expiresAt: 0 },
+      },
+    }),
+  });
+
+  return wixClient;
+};
