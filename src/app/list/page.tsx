@@ -1,10 +1,21 @@
 import Filter from "@/components/Filter";
 import ProductList from "@/components/ProductsList";
+import { wixClientServer } from "@/lib/wixClientServers";
 
 import Image from "next/image";
 import { Suspense } from "react";
 
-const ListPage = async ({ searchParams }: { searchParams: any }) => {
+const ListPage = async ({ searchParams }: { searchParams: any}) => {
+ const params=await searchParams;
+
+  
+  const wix = await wixClientServer();
+  const cats = await wix.collections.getCollectionBySlug( params.cat||
+ "all-products"
+  );
+
+
+
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
       {/* CAMPAIGN */}
@@ -27,7 +38,10 @@ const ListPage = async ({ searchParams }: { searchParams: any }) => {
       {/* PRODUCTS */}
       <h1 className="mt-12 text-xl font-semibold">JASSI For You!</h1>
 
-      <ProductList />
+      <ProductList
+        category={cats.collection?._id || "00000000-000000-000000-000000000001"}
+        searchParams={searchParams}
+      />
     </div>
   );
 };

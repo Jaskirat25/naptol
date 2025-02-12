@@ -1,7 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const CustomizeProducts = () => {
+const CustomizeProducts = ({
+  productId,
+  variants,
+  productOptions,
+}:{
+  productId:any;
+  variants:any;
+  productOptions:any;
+}) => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4" key={1}>

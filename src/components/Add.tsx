@@ -1,21 +1,27 @@
-
 "use client";
 
 import { useState } from "react";
 
-const Add = () => {
+const Add = ({
+  productId,
+  variantId,
+  stockNumber,
+}: {
+  productId: string;
+  variantId: string;
+  stockNumber: number;
+}) => {
   const [quantity, setQuantity] = useState(1);
 
   // // TEMPORARY
   // const stock = 4;
 
-
-const handleQuantity=(type:"d")=>{
-    setQuantity((prev)=>prev-1)
-}
-const handleQuantit=(type:"i")=>{
-    setQuantity((prev)=>prev+1)
-}
+  const handleQuantity = (type: "d") => {
+    setQuantity((prev) => prev - 1);
+  };
+  const handleQuantit = (type: "i") => {
+    setQuantity((prev) => prev + 1);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -26,7 +32,7 @@ const handleQuantit=(type:"i")=>{
             <button
               className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
               onClick={() => handleQuantity("d")}
-              disabled={quantity===1}
+              disabled={quantity === 1}
             >
               -
             </button>
@@ -34,24 +40,17 @@ const handleQuantit=(type:"i")=>{
             <button
               className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
               onClick={() => handleQuantit("i")}
-         
             >
               +
             </button>
           </div>
-         
-            <div className="text-xs">
-              Only <span className="text-orange-500"> items</span>{" "}
-              left!
-              <br /> {"Don't"} miss it
-            </div>
-        
+
+          <div className="text-xs">
+            Only <span className="text-orange-500"> items</span> left!
+            <br /> {"Don't"} miss it
+          </div>
         </div>
-        <button
-    
-          
-          className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
-        >
+        <button className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none">
           Add to Cart
         </button>
       </div>

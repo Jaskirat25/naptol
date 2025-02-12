@@ -4,20 +4,22 @@ import { log } from "console";
 import Image from "next/image";
 import Link from "next/link";
 
-const PRODUCT_PER_PAGE = 8;
+const PRODUCT_PER_PAGE = 20;
 
 const ProductList = async ({
   category,
   limit,
+  searchParams,
 }: {
   category: string;
-  limit: number;
+  limit?: number;
+  searchParams:any;
 }) => {
   const Wix = await wixClientServer();
 
   const item =await Wix.products
     .queryProducts()
-    .eq("collectionIds",process.env.NEXT_PUBLIC_FEATURED_PRODUCTS_ID!)
+    .eq("collectionIds",category)
     .limit(limit || PRODUCT_PER_PAGE)
     .find();
 
@@ -56,7 +58,14 @@ return(
             <span className="font-semibold">{product.price?.price}</span>
           </div>
 
-          <div className="text-sm text-gray-500">{product.description}</div>
+          <div className="text-sm text-gray-500 h-[12vh] overflow-hidden">
+  {product.description &&
+  
+  product.description.length > 50
+    ? product.description.slice(0, product.description.length - 50) + "......."
+    : product.description}
+</div>
+         
 
           <button className="rounded-2xl ring-1 ring-black text-black w-max py-2 px-4 text-xs hover:bg-black hover:text-white">
             Add to Cart
