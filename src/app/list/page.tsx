@@ -5,16 +5,13 @@ import { wixClientServer } from "@/lib/wixClientServers";
 import Image from "next/image";
 import { Suspense } from "react";
 
-const ListPage = async ({ searchParams }: { searchParams: any}) => {
- const params=await searchParams;
+const ListPage = async ({ searchParams }: { searchParams: any }) => {
+  const params = await searchParams;
 
-  
   const wix = await wixClientServer();
-  const cats = await wix.collections.getCollectionBySlug( params.cat||
- "all-products"
+  const cats = await wix.collections.getCollectionBySlug(
+    params.cat || "all-products"
   );
-
-
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
