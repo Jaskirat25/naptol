@@ -6,37 +6,39 @@ import { useCartStore } from "@/hooks/useCartStore";
 import { media as wixMedia } from "@wix/sdk";
 import { useWixClient } from "@/hooks/useWixClient";
 import { currentCart} from "@wix/ecom";
-
+import { useRouter } from "next/navigation";
 const CartModal = () => {
   // TEMPORARY
   // const cartItems = true;
 
   const wixClient = useWixClient();
   const {  cart, isLoading, removeItem } = useCartStore();
-
+const router=useRouter()
   const handleCheckout = async () => {
-    try {
-      const checkout =
-        await wixClient.currentCart.createCheckoutFromCurrentCart({
-          channelType: currentCart.ChannelType.WEB,
-        });
+    router.push("/success")
+  }
+  //   try {
+  //     const checkout =
+  //       await wixClient.currentCart.createCheckoutFromCurrentCart({
+  //         channelType: currentCart.ChannelType.WEB,
+  //       });
 
-      const { redirectSession } =
-        await wixClient.redirects.createRedirectSession({
-          ecomCheckout: { checkoutId: checkout.checkoutId },
-          callbacks: {
-            postFlowUrl: window.location.origin,
-            thankYouPageUrl: `${window.location.origin}/success`,
-          },
-        });
+  //     const { redirectSession } =
+  //       await wixClient.redirects.createRedirectSession({
+  //         ecomCheckout: { checkoutId: checkout.checkoutId },
+  //         callbacks: {
+  //           postFlowUrl: window.location.origin,
+  //           thankYouPageUrl: `${window.location.origin}/success`,
+  //         },
+  //       });
 
-      if (redirectSession?.fullUrl) {
-        window.location.href = redirectSession.fullUrl;
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     if (redirectSession?.fullUrl) {
+  //       window.location.href = redirectSession.fullUrl;
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className="w-max absolute p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-12 right-0 flex flex-col gap-6 z-20">
@@ -105,7 +107,7 @@ const CartModal = () => {
           <div className="">
             <div className="flex items-center justify-between font-semibold">
               <span className="">Subtotal</span>
-              <span className="">${cart.subtotal.amount}</span>
+              <span className="">$7000</span>
             </div>
             <p className="text-gray-500 text-sm mt-2 mb-4">
               Shipping and taxes calculated at checkout.
