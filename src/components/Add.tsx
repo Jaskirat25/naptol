@@ -1,5 +1,7 @@
 "use client";
 
+import { useCartStore } from "@/hooks/useCartStore";
+import { useWixClient } from "@/hooks/useWixClient";
 import { useState } from "react";
 
 const Add = ({
@@ -16,12 +18,18 @@ const Add = ({
   // // TEMPORARY
   // const stock = 4;
 
-  const handleQuantity = (type: "d") => {
-    setQuantity((prev) => prev - 1);
+  const handleQuantity = (type: "i" | "d") => {
+    if (type === "d" && quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+    if (type === "i" && quantity < stockNumber) {
+      setQuantity((prev) => prev + 1);
+    }
   };
-  const handleQuantit = (type: "i") => {
-    setQuantity((prev) => prev + 1);
-  };
+
+  const wixClient = useWixClient();
+
+  const { addItem, isLoading } = useCartStore();
 
   return (
     <div className="flex flex-col gap-4">
@@ -32,25 +40,34 @@ const Add = ({
             <button
               className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
               onClick={() => handleQuantity("d")}
-              disabled={quantity === 1}
+              disabled={quantity===1}
             >
               -
             </button>
             {quantity}
             <button
               className="cursor-pointer text-xl disabled:cursor-not-allowed disabled:opacity-20"
-              onClick={() => handleQuantit("i")}
+              onClick={() => handleQuantity("i")}
+              disabled={quantity===stockNumber}
             >
               +
             </button>
           </div>
-
-          <div className="text-xs">
-            Only <span className="text-orange-500"> items</span> left!
-            <br /> {"Don't"} miss it
-          </div>
+          {stockNumber < 1 ? (
+            <div className="text-xs">Product is out of stock</div>
+          ) : (
+            <div className="text-xs">
+              Only <span className="text-orange-500">{stockNumber} items</span>{" "}
+              left!
+              <br /> {"Don't"} miss it
+            </div>
+          )}
         </div>
-        <button className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none">
+        <button
+          onClick={() => addItem(wixClient, productId, variantId, quantity)}
+          // disabled={isLoading}
+          className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
+        >
           Add to Cart
         </button>
       </div>

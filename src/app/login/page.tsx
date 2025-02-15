@@ -4,7 +4,8 @@ import { useWixClient } from "@/hooks/useWixClient";
 import { LoginState } from "@wix/sdk";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { WixClient } from "@/context/wixContext";
 
 
 
@@ -21,9 +22,12 @@ const LoginPage = () => {
 
   const isLoggedIn = wixClient.auth.loggedIn();
 
-  if (isLoggedIn) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/"); 
+    }
+  }, [isLoggedIn]);
+  
 
   const [mode, setMode] = useState(MODE.LOGIN);
 
@@ -63,17 +67,21 @@ const LoginPage = () => {
 
       switch (mode) {
         case MODE.LOGIN:
+
           response = await wixClient.auth.login({
             email,
             password,
           });
+          
           break;
         case MODE.REGISTER:
           
+         
           response = await wixClient.auth.register({
+            
             email,
             password,
-           
+            
           });
           
           break;
@@ -92,6 +100,7 @@ const LoginPage = () => {
         default:
           break;
       }
+
 
       switch (response?.loginState) {
         case LoginState.SUCCESS:
@@ -127,8 +136,10 @@ const LoginPage = () => {
           break;
       }
     } catch (err) {
-      console.log(err);
-      setError("Something went wrong!");
+      
+        console.log(err);
+     
+        setError("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
