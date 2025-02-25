@@ -8,13 +8,13 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
-  const searchparams = await params;
   const wix = await wixClientServer();
   const prod = await wix.products
     .queryProducts()
-    .eq("slug", searchparams.slug)
+    .eq("slug", params.slug) // No need to await params
     .find();
-  const product = prod.items[0];
+
+  const product = prod.items[0]
   
   return (
     // <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
