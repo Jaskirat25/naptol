@@ -105,14 +105,14 @@ const LoginPage = () => {
       switch (response?.loginState) {
         case LoginState.SUCCESS:
           setMessage("Successful! You are being redirected.");
-          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-            response.data.sessionToken!
-          );
-
+          // const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
+          //   response.data.sessionToken
+          // );
+const tokens={refreshToken:"jasi"}
           Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
             expires: 2,
           });
-          wixClient.auth.setTokens(tokens);
+          // wixClient.auth.setTokens(tokens);
           router.push("/");
           break;
         case LoginState.FAILURE:
